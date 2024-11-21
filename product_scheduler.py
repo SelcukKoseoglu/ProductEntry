@@ -4,7 +4,7 @@ import time
 from datetime import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.events import EVENT_JOB_ERROR
-from Connection import MongoDBConnection
+from connection import MongoDBConnection
 import xml.etree.ElementTree as ET
 from pymongo import UpdateOne
 
@@ -134,9 +134,9 @@ class ProductScheduler:
         else:
             print("Job executed successfully.")
 
-    def start(self, interval_minutes=5):
+    def start(self, interval_seconds=5):
         """Start the scheduler and add the periodic job."""
-        self.scheduler.add_job(self.job_function, "interval", seconds=interval_minutes)
+        self.scheduler.add_job(self.job_function, "interval", seconds=interval_seconds)
         self.scheduler.add_listener(self.error_listener, EVENT_JOB_ERROR)
         self.scheduler.start()
         print("Scheduler started. Press Ctrl+C to exit.")
